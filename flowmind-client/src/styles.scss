@@ -1,0 +1,25 @@
+.icon {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  flex-shrink: 0;
+}
+
+.icon-google {
+  background-image: url("/assets/icons/google.svg");
+}
+.icon-facebook {
+  background-image: url("/assets/icons/facebook.svg");
+}
+.icon-email {
+  background-image: url("/assets/icons/email.svg");
+}
+.icon-password {
+  background-image: url("/assets/icons/password.svg");
+}
+.icon-eye {
+  background-image: url("/assets/icons/eye.svg");
+}
