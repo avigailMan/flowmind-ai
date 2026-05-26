@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="FlowMind.API/FlowMind.API.csproj" />
+  <Project Path="FlowMind.Core/FlowMind.Core.csproj" />
+</Solution>
