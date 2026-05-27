@@ -15,6 +15,9 @@ namespace FlowMind.Core.DbContextOptions
         [Required, MaxLength(50)]
         public string LastName { get; set; } = string.Empty;
 
+        [DataType(DataType.Date)]
+        public DateTime DateOfBirth { get; set; }
+
         [Required, MaxLength(5)]
         public string PreferredCurrency { get; set; } = "ILS";
     }

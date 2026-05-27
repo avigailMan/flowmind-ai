@@ -1,0 +1,37 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: flowmind-postgres
+    environment:
+      POSTGRES_USER: flowmind
+      POSTGRES_PASSWORD: flowmind123
+      POSTGRES_DB: flowmind_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  server:
+    build:
+      context: ./flowmind-server
+      dockerfile: Dockerfile
+    container_name: flowmind-server
+    ports:
+      - "5000:8080"
+    depends_on:
+      - postgres
+    environment:
+      ConnectionStrings__DefaultConnection: "Host=postgres;Port=5432;Database=flowmind_db;Username=flowmind;Password=flowmind123"
+
+  client:
+    build:
+      context: ./flowmind-client
+      dockerfile: Dockerfile
+    container_name: flowmind-client
+    ports:
+      - "4200:80"
+    depends_on:
+      - server
+
+volumes:
+  postgres_data:
