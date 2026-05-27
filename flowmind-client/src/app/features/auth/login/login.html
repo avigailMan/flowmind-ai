@@ -1,0 +1,63 @@
+<div class="login-page">
+  <section class="login-hero d-none d-md-flex">
+    <img class="login-illustration" src="assets/images/login.svg" alt="" />
+  </section>
+
+  <section class="login-card">
+    <h2 class="login-subtitle">ברוכים הבאים</h2>
+    <svg class="icon-flowMindAi"></svg>
+
+    <button id="googleBtn">
+      <span class="icon icon-google w-20 h-20"></span>
+      <span>התחבר באמצעות גוגל</span>
+    </button>
+    
+
+    <div class="divider">
+      <span></span>
+      <p>OR</p>
+      <span></span>
+    </div>
+
+    <div class="login-field input-app">
+      <span class="icon icon-email w-20 h-20"></span>
+      <div>
+        <label>מייל</label>
+        <input value="example@gmail.com" />
+      </div>
+    </div>
+
+    <div class="login-field input-app">
+      <span class="icon icon-password w-20 h-20"></span>
+
+      <div>
+        <label>סיסמא</label>
+        <input [type]="showPassword ? 'text' : 'password'" value="123456789" />
+      </div>
+
+      <button
+        type="button"
+        class="icon-btn eye-btn"
+        (click)="showPassword = !showPassword"
+        aria-label="Show password">
+        <span class="icon icon-eye w-14 h-14"></span>
+      </button>
+    </div>
+
+    <div class="login-options">
+      <label>
+        <input type="checkbox" />
+        תזכור אותי
+      </label>
+
+      <a href="#">שכחת סיסמא?</a>
+    </div>
+
+    <button class="login-btn btn-app btn-primary-app">התחבר</button>
+
+    <p class="register">
+      אין לך עוד חשבון?
+      <a href="#">הירשם</a>
+    </p>
+  </section>
+</div>
