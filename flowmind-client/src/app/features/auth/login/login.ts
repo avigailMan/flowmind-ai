@@ -1,4 +1,4 @@
-import { AfterViewInit, Component } from '@angular/core';
+import { AfterViewInit, Component, inject } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { DividerModule } from 'primeng/divider';
@@ -7,6 +7,7 @@ import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { CheckboxModule } from 'primeng/checkbox';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 declare const google: any;
 
 @Component({
@@ -28,6 +29,7 @@ declare const google: any;
 export class Login implements AfterViewInit {
   rememberMe = false;
   showPassword = false;
+    private router = inject(Router);
   ngAfterViewInit(): void {
 
     google.accounts.id.initialize({
@@ -52,5 +54,8 @@ export class Login implements AfterViewInit {
     const idToken = response.credential;
 
     // לשלוח לבקאנד
+  }
+    goToDashboard(): void {
+    this.router.navigate(['/dashboard']);
   }
 }

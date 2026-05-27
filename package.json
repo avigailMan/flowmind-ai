@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "@primeng/themes": "^21.0.4"
+    "@primeng/themes": "^21.0.4",
+    "bootstrap": "^5.3.8"
   }
 }
