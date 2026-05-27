@@ -5,6 +5,7 @@ using FlowMind.Core.Repositories;
 using FlowMind.Core.Interfaces;
 using FlowMind.API.Services;
 using FlowMind.Server.Middleware.Extensions;
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
