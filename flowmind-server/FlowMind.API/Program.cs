@@ -1,5 +1,6 @@
 using FlowMind.Core.Data;
 using Microsoft.EntityFrameworkCore;
+using FlowMind.Server.Middleware.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddControllers();
 
 var app = builder.Build();
+
+app.UseGlobalExceptionHandling();
 
 app.UseHttpsRedirection();
 
