@@ -2,7 +2,7 @@
 
 namespace FlowMind.Core.Models
 {
-    public class ApplicationUser
+    public class User
     {
         public string Id { get; set; } = Guid.NewGuid().ToString();
         public string Email { get; set; } = string.Empty;

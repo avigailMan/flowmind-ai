@@ -1,0 +1,68 @@
+<p>register works!</p>
+<div class="login-page">
+  <section class="login-hero d-none d-md-flex">
+    <img class="login-illustration" src="assets/images/login.svg" alt="" />
+  </section>
+
+  <section class="login-card">
+    <h2 class="login-subtitle">יצירת חשבון</h2>
+    <svg class="icon-flowMindAi"></svg>
+
+    <div class="login-field input-app">
+      <span class="icon icon-user w-20 h-20"></span>
+      <div>
+        <label>שם פרטי</label>
+        <input [(ngModel)]="registerForm.firstName" />
+      </div>
+    </div>
+
+    <div class="login-field input-app">
+      <span class="icon icon-user w-20 h-20"></span>
+      <div>
+        <label>שם משפחה</label>
+        <input [(ngModel)]="registerForm.lastName" />
+      </div>
+    </div>
+
+    <div class="login-field input-app">
+      <span class="icon icon-email w-20 h-20"></span>
+      <div>
+        <label>מייל</label>
+        <input [(ngModel)]="registerForm.email" type="email" />
+      </div>
+    </div>
+
+    <div class="login-field input-app">
+      <span class="icon icon-password w-20 h-20"></span>
+      <div>
+        <label>סיסמא</label>
+        <input [(ngModel)]="registerForm.password" [type]="showPassword ? 'text' : 'password'" />
+      </div>
+
+      <button type="button" class="icon-btn eye-btn" (click)="showPassword = !showPassword">
+        <span class="icon icon-eye w-14 h-14"></span>
+      </button>
+    </div>
+
+    <div class="login-field input-app">
+      <span class="icon icon-money w-20 h-20"></span>
+      <div>
+        <label>מטבע מועדף</label>
+        <select [(ngModel)]="registerForm.preferredCurrency">
+          <option value="ILS">₪ שקל</option>
+          <option value="USD">$ דולר</option>
+          <option value="EUR">€ יורו</option>
+        </select>
+      </div>
+    </div>
+
+    <button class="login-btn btn-app btn-primary-app" (click)="register()">
+      הירשם
+    </button>
+
+    <p class="register">
+      כבר יש לך חשבון?
+      <a routerLink="/">התחבר</a>
+    </p>
+  </section>
+</div>
