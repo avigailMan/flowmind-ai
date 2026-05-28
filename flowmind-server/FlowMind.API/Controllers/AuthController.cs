@@ -24,7 +24,7 @@ namespace FlowMind.API.Controllers
         public async Task<IActionResult> Register([FromBody] UserRegisterDto registerDto)
         {
             if (await _authRepo.UserExists(registerDto.Email))
-                return BadRequest(ApiResponse<string>.Failure("Registration failed",new List<string> { "Email is already registered." }));
+                return BadRequest(ApiResponse<string>.Failure("Registration failed", new List<string> { "Email is already registered." }));
 
             var userToCreate = new User
             {
@@ -67,66 +67,68 @@ namespace FlowMind.API.Controllers
                 Token = _tokenService.CreateToken(user)
             };
 
-            return Ok(ApiResponse<UserResponseDto>.Success(userResponse, "Login successful."));        }
-    }
-    [HttpPost("google-login")]
-public async Task<IActionResult> GoogleLogin([FromBody] GoogleLoginDto googleLoginDto)
-{
-    var settings = new GoogleJsonWebSignature.ValidationSettings
-    {
-        Audience = new[]
-        {
-            HttpContext.RequestServices
-                .GetRequiredService<IConfiguration>()["GoogleAuth:ClientId"]
+            return Ok(ApiResponse<UserResponseDto>.Success(userResponse, "Login successful."));
         }
-    };
 
-    GoogleJsonWebSignature.Payload payload;
-
-    try
-    {
-        payload = await GoogleJsonWebSignature.ValidateAsync(
-            googleLoginDto.IdToken,
-            settings
-        );
-    }
-    catch
-    {
-        return Unauthorized(
-            ApiResponse<string>.Failure(
-                "Google authentication failed",
-                new List<string> { "Invalid Google token." }
-            )
-        );
-    }
-
-    var email = payload.Email.ToLower();
-
-    var user = await _authRepo.GetUserByEmail(email);
-
-    if (user == null)
-    {
-        user = new User
+        [HttpPost("google-login")]
+        public async Task<IActionResult> GoogleLogin([FromBody] GoogleLoginDto googleLoginDto)
         {
-            Email = email,
-            FirstName = payload.GivenName ?? "",
-            LastName = payload.FamilyName ?? "",
-            PreferredCurrency = "ILS"
-        };
+            var settings = new GoogleJsonWebSignature.ValidationSettings
+            {
+                Audience = new[]
+                {
+                    HttpContext.RequestServices
+                        .GetRequiredService<IConfiguration>()["GoogleAuth:ClientId"]
+                }
+            };
 
-        user = await _authRepo.RegisterGoogleUser(user);
+            GoogleJsonWebSignature.Payload payload;
+
+            try
+            {
+                payload = await GoogleJsonWebSignature.ValidateAsync(
+                    googleLoginDto.IdToken,
+                    settings
+                );
+            }
+            catch
+            {
+                return Unauthorized(
+                    ApiResponse<string>.Failure(
+                        "Google authentication failed",
+                        new List<string> { "Invalid Google token." }
+                    )
+                );
+            }
+
+            var email = payload.Email.ToLower();
+
+            var user = await _authRepo.GetUserByEmail(email);
+
+            if (user == null)
+            {
+                user = new User
+                {
+                    Email = email,
+                    FirstName = payload.GivenName ?? "",
+                    LastName = payload.FamilyName ?? "",
+                    PreferredCurrency = "ILS"
+                };
+
+                user = await _authRepo.RegisterGoogleUser(user);
+            }
+
+            var userResponse = new UserResponseDto
+            {
+                Id = Guid.Parse(user.Id),
+                Email = user.Email,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                PreferredCurrency = user.PreferredCurrency,
+                Token = _tokenService.CreateToken(user)
+            };
+
+            return Ok(ApiResponse<UserResponseDto>.Success(userResponse, "Google login successful."));
+        }
     }
-
-    var userResponse = new UserResponseDto
-    {
-        Id = Guid.Parse(user.Id),
-        Email = user.Email,
-        FirstName = user.FirstName,
-        LastName = user.LastName,
-        PreferredCurrency = user.PreferredCurrency,
-        Token = _tokenService.CreateToken(user)
-    };
-
-    return Ok(ApiResponse<UserResponseDto>.Success(userResponse, "Google login successful."));
-}
 }
