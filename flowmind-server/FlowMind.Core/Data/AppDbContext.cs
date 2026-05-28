@@ -10,41 +10,44 @@ namespace FlowMind.Core.Data
         {
         }
 
-        public DbSet<ApplicationUser> Users { get; set; }
+        public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            builder.Entity<User>().ToTable("Users");
+
             // 1. אכיפת אינדקס ייחודי על שדה האימייל ברמת הדאטאבייס (אבטחה מקסימלית)
-            builder.Entity<ApplicationUser>()
+            builder.Entity<User>()
                 .HasIndex(u => u.Email)
                 .IsUnique();
 
             // 2. הגדרת שדה האימייל כחובה והגבלת אורך למניעת מתקפות DoS
-            builder.Entity<ApplicationUser>()
+            builder.Entity<User>()
                 .Property(u => u.Email)
                 .IsRequired()
                 .HasMaxLength(255);
 
             // 3. הגבלת אורך לשמות המשתמש (מניעת ניצול לרעה של נפח זיכרון)
-            builder.Entity<ApplicationUser>()
+            builder.Entity<User>()
                 .Property(u => u.FirstName)
                 .IsRequired()
                 .HasMaxLength(50);
 
-            builder.Entity<ApplicationUser>()
+            builder.Entity<User>()
                 .Property(u => u.LastName)
                 .IsRequired()
                 .HasMaxLength(50);
 
             // // 4. הגבלת אורך לשדה התפקיד (הרול)
-            // builder.Entity<ApplicationUser>()
+            // builder.Entity<User>()
             //     .Property(u => u.Role)
             //     .IsRequired()
             //     .HasMaxLength(20);
 
             // 5. הגבלת אורך לשדה המטבע (למשל "ILS", "USD" - מספיקים 5 תווים לביטחון)
-            builder.Entity<ApplicationUser>()
+            builder.Entity<User>()
                 .Property(u => u.PreferredCurrency)
                 .IsRequired()
                 .HasMaxLength(5);
